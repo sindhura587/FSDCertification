@@ -1,0 +1,10 @@
+FROM maven:3.5.4-jdk-8-slim
+WORKDIR /usr/src/java-code
+COPY . /usr/src/java-code/
+RUN mvn package
+LABEL maintainer="Sindhura587@gmail.com"
+
+WORKDIR /usr/src/java-app
+RUN cp /usr/src/java-code/target/*.jar ./projectmanagement-fsd.jar
+EXPOSE 8080
+CMD ["java", "-jar", "projectmanagement-fsd.jar"]
