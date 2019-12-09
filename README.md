@@ -65,7 +65,7 @@ My Sql Docker Steps
 --------------------
   Step 1 -> docker pull mysql:latest
   
-  Step 2 -> docker run -p 3306:3306 --name mysql-standalone -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=cogdb -e MYSQL_USER=admin -e MYSQL_PASSWORD=admin -d mysql:latest
+  Step 2 -> docker run -p 3306:3306 --name mysql-standalone -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=fsddb -e MYSQL_USER=root -e MYSQL_PASSWORD=root -d mysql:latest
 
 
 Backend Steps
