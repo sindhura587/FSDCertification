@@ -42,13 +42,13 @@ Backend:
 
 GIT Repository
 ---------------
-Public: https://github.com/Sankarthik/FSDCertification
+Public: https://github.com/sindhura587/FSDCertification
 
 Docker HUB Repository
 ----------------------
-Frontend: docker pull sankarthik30/project-mgr-ui:<<tagname>>
+Frontend: docker pull sindhura587/project-mgr-ui:<<tagname>>
 
-Backend:  docker pull sankarthik30/project-mgr-springboot:<<tagname>>
+Backend:  docker pull sindhura587/project-mgr-be:<<tagname>>
 
 
 ### Docker Build Image and Deploy into Docker HUB ###
@@ -65,19 +65,19 @@ My Sql Docker Steps
 --------------------
   Step 1 -> docker pull mysql:latest
   
-  Step 2 -> docker run -p 3306:3306 --name mysql-standalone -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=cogdb -e MYSQL_USER=admin -e MYSQL_PASSWORD=admin -d mysql:latest
+  Step 2 -> docker run -p 3306:3306 --name mysql-standalone -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=fsddb -e MYSQL_USER=root -e MYSQL_PASSWORD=root -d mysql:latest
 
 
 Backend Steps
 ---------------
 From the Dockerfile location in docker terminal ->  
-		Step 1->    docker build -f Dockerfile -t project-mgr-springboot:1.0 . 
+		Step 1->    docker build -f Dockerfile -t project-mgr-be:1.0 . 
 		
-		Step 2->    docker run -p 8080:8080 project-mgr-springboot (Run alone without DB) - Dont change PORT in docker vm's to avoid nightmares.:)
+		Step 2->    docker run -p 8080:8080 project-mgr-be (Run alone without DB) - Dont change PORT in docker vm's to avoid nightmares.:)
 		
-		Step 3 ->   docker run -p 8080:8080 --name project-mgr-springboot --link mysql-standalone:mysql -d project-mgr-springboot  (Run with my SQL)
+		Step 3 ->   docker run -p 8080:8080 --name project-mgr-be --link mysql-standalone:mysql -d project-mgr-springboot  (Run with my SQL)
 		
-        Step 4 ->   docker logs -f mysql-standalone and docker logs -f project-mgr-springboot to verify logs
+        Step 4 ->   docker logs -f mysql-standalone and docker logs -f project-mgr-be to verify logs
 		
 		
 Jenkins Steps inside Docker
@@ -89,7 +89,7 @@ Jenkins Steps inside Docker
 
 To run docker inside Jenkins
 ----------------------------
-docker run -u root -p 8088:8080 -v jenkins-data:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v "/C/Users/GiridharanS":/home jenkinsci/blueocean
+docker run -u root -p 8088:8080 -v jenkins-data:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v "/C/Users/Sindhu":/home jenkinsci/blueocean
 
 System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "sandbox allow-scripts; default-src 'self'; style-src 'self' 'unsafe-inline';")
 
