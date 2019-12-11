@@ -1,10 +1,10 @@
 ### FSD Project Management Case Study ###
 --------------------------------------------
 
-Application is to manage the Project and Tasks with the below business functionalities.
+A sing page application is developed to manage the Project and Tasks with the below business functionalities.
 To have the new project and task, User needs to be created
 
-	-	 User can view all the existing projects/tasks and also filter the tasks in Frontend. (Backend JPA Filter is defined and not implemented on purpose)
+	-   User can view all the existing projects/tasks and also filter the tasks in Frontend. 
 
 	-   User can add a new project/task with the mandatory fields. Proper validations have been added.
 
@@ -23,7 +23,7 @@ project-manager (Backend) - Spring Boot project uses MySql DB for real time and 
 						  - Rest API, Spring Data JPA, JUnit and ECLEmma JaCaCo plugin along with Maven plugin.
 
 project-manager-ui (Frontend) - Frontend application uses Angular 6 and latest dependencies.
-							  -  All screens prototypes used Bootstrap version 4 and npm as dependency management.
+						-  All screens prototypes used Bootstrap version 4 and npm as dependency management.
 							  
 
 ### Application Execution Instructions: ###
@@ -48,7 +48,7 @@ Docker HUB Repository
 ----------------------
 Frontend: docker pull sindhura587/project-mgr-ui:<<tagname>>
 
-Backend:  docker pull sindhura587/project-mgr-be:<<tagname>>
+Backend:  docker pull sindhura587/project-mgr:<<tagname>>
 
 
 ### Docker Build Image and Deploy into Docker HUB ###
