@@ -4,6 +4,15 @@
 /dist
 /tmp
 /out-tsc
+.idea/
+*.iml
+target/
+*.class
+.settings/
+.project
+.classpath
+/bin/
+
 
 # dependencies
 /node_modules
@@ -37,4 +46,3 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-/bin/

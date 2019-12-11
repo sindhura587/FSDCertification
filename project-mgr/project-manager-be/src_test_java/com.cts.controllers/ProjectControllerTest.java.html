@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ProjectControllerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">project-manager-be (Dec 10, 2019 1:11:44 AM)</a> &gt; <a href="../../index.html" class="el_group">project-manager-be</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.cts.controllers</a> &gt; <span class="el_source">ProjectControllerTest.java</span></div><h1>ProjectControllerTest.java</h1><pre class="source lang-java linenums">package com.cts.controllers;
+
+import static java.sql.Date.valueOf;
+import static java.time.LocalDate.now;
+import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+import com.cts.entities.Project;
+import com.cts.service.ProjectService;
+import com.cts.util.TestUtility;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+@RunWith(SpringRunner.class)
+@AutoConfigureMockMvc
+@WebMvcTest(ProjectController.class)
+<span class="fc" id="L32">public class ProjectControllerTest {</span>
+	
+	@Autowired
+	private MockMvc mockMvc;
+	
+	@MockBean
+    ProjectService service;
+
+	@Test
+<span class="fc" id="L41">	public void contextLoads() {	}</span>
+	
+	@Test
+	public void findAllProjects() throws Exception {
+<span class="fc" id="L45">		Project project = new Project(1, &quot;Project 1&quot;,</span>
+<span class="fc" id="L46">				             valueOf(now()), valueOf(now().plusDays(10)), </span>
+<span class="fc" id="L47">				             5);</span>
+		
+<span class="fc" id="L49">		when(service.findAllProjects()).thenReturn(asList(project));</span>
+		
+<span class="fc" id="L51">		this.mockMvc.perform(MockMvcRequestBuilders.get(&quot;/projects&quot;)</span>
+<span class="fc" id="L52">				.accept(MediaType.parseMediaType(&quot;application/json;charset=UTF-8&quot;)))</span>
+<span class="fc" id="L53">				.andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="fc" id="L54">				.andExpect(MockMvcResultMatchers.jsonPath(&quot;$&quot;, hasSize(1)));</span>
+		
+<span class="fc" id="L56">		verify(service, times(1)).findAllProjects();</span>
+<span class="fc" id="L57">        verifyNoMoreInteractions(service);</span>
+<span class="fc" id="L58">	}</span>
+	
+	@Test
+	public void findAllProjectsWithTask() throws Exception {
+<span class="fc" id="L62">		Project project = new Project(1, &quot;Project 1&quot;, </span>
+<span class="fc" id="L63">				             valueOf(now()), valueOf(now().plusDays(10)), </span>
+<span class="fc" id="L64">				             5);</span>
+		
+<span class="fc" id="L66">		when(service.findAllProjectsWithTask()).thenReturn(asList(project));</span>
+		
+<span class="fc" id="L68">		this.mockMvc.perform(MockMvcRequestBuilders.get(&quot;/projects/tasks&quot;)</span>
+<span class="fc" id="L69">				.accept(MediaType.parseMediaType(&quot;application/json;charset=UTF-8&quot;)))</span>
+<span class="fc" id="L70">				.andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="fc" id="L71">				.andExpect(MockMvcResultMatchers.jsonPath(&quot;$&quot;, hasSize(1)));</span>
+		
+<span class="fc" id="L73">		verify(service, times(1)).findAllProjectsWithTask();</span>
+<span class="fc" id="L74">        verifyNoMoreInteractions(service);</span>
+<span class="fc" id="L75">	}</span>
+	
+	@Test
+	public void findProject() throws Exception {
+<span class="fc" id="L79">		Project project = new Project(1, &quot;Project 1&quot;, </span>
+<span class="fc" id="L80">	             valueOf(now()), valueOf(now().plusDays(10)), </span>
+<span class="fc" id="L81">	             5);</span>
+		
+<span class="fc" id="L83">		when(service.findProject(1)).thenReturn(project);</span>
+		
+<span class="fc" id="L85">		this.mockMvc.perform(MockMvcRequestBuilders.get(&quot;/projects/1&quot;)</span>
+<span class="fc" id="L86">				.accept(MediaType.parseMediaType(&quot;application/json;charset=UTF-8&quot;)))</span>
+<span class="fc" id="L87">				.andExpect(MockMvcResultMatchers.status().isOk());</span>
+		
+<span class="fc" id="L89">		verify(service, times(1)).findProject(1);</span>
+<span class="fc" id="L90">        verifyNoMoreInteractions(service);</span>
+<span class="fc" id="L91">	}</span>
+	
+	@Test
+	public void addProject() throws Exception {
+<span class="fc" id="L95">		Project project = new Project(1, &quot;Project 1&quot;, </span>
+<span class="fc" id="L96">	             valueOf(now()), valueOf(now().plusDays(10)), </span>
+<span class="fc" id="L97">	             5);</span>
+		
+<span class="fc" id="L99">		Mockito.doNothing().when(service).addProject(project);</span>
+		
+<span class="fc" id="L101">		this.mockMvc.perform(MockMvcRequestBuilders.post(&quot;/projects&quot;)</span>
+<span class="fc" id="L102">				.contentType(TestUtility.APPLICATION_JSON_UTF8)</span>
+<span class="fc" id="L103">				.content(TestUtility.convertObjectToJsonBytes(project))</span>
+<span class="fc" id="L104">				.accept(MediaType.parseMediaType(&quot;application/json;charset=UTF-8&quot;)))</span>
+<span class="fc" id="L105">				.andExpect(MockMvcResultMatchers.status().isOk());	</span>
+<span class="fc" id="L106">		ArgumentCaptor&lt;Project&gt; projCapture = ArgumentCaptor.forClass(Project.class);</span>
+<span class="fc" id="L107">		verify(service, times(1)).addProject(projCapture.capture());</span>
+<span class="fc" id="L108">        verifyNoMoreInteractions(service);</span>
+<span class="fc" id="L109">	}</span>
+	
+	@Test
+	public void updateProject() throws Exception {
+<span class="fc" id="L113">		Project project = new Project(1, &quot;Project 1&quot;, </span>
+<span class="fc" id="L114">	             valueOf(now()), valueOf(now().plusDays(10)), </span>
+<span class="fc" id="L115">	             5);</span>
+<span class="fc" id="L116">		Mockito.doNothing().when(service).updateProject(project);</span>
+		
+<span class="fc" id="L118">		this.mockMvc.perform(MockMvcRequestBuilders.put(&quot;/projects&quot;)</span>
+<span class="fc" id="L119">				.contentType(TestUtility.APPLICATION_JSON_UTF8)</span>
+<span class="fc" id="L120">				.content(TestUtility.convertObjectToJsonBytes(project))</span>
+<span class="fc" id="L121">				.accept(MediaType.parseMediaType(&quot;application/json;charset=UTF-8&quot;)))</span>
+<span class="fc" id="L122">				.andExpect(MockMvcResultMatchers.status().isOk());	</span>
+<span class="fc" id="L123">		ArgumentCaptor&lt;Project&gt; projCapture = ArgumentCaptor.forClass(Project.class);</span>
+<span class="fc" id="L124">		verify(service, times(1)).updateProject(projCapture.capture());</span>
+<span class="fc" id="L125">        verifyNoMoreInteractions(service);</span>
+<span class="fc" id="L126">	}</span>
+	
+	@Test
+	public void endProject() throws Exception {
+<span class="fc" id="L130">		Mockito.doNothing().when(service).endProject(1);</span>
+		
+<span class="fc" id="L132">		this.mockMvc.perform(MockMvcRequestBuilders.put(&quot;/projects/1&quot;)</span>
+<span class="fc" id="L133">				.contentType(TestUtility.APPLICATION_JSON_UTF8)</span>
+<span class="fc" id="L134">				.accept(MediaType.parseMediaType(&quot;application/json;charset=UTF-8&quot;)))</span>
+<span class="fc" id="L135">				.andExpect(MockMvcResultMatchers.status().isOk());	</span>
+<span class="fc" id="L136">		verify(service, times(1)).endProject(1);</span>
+<span class="fc" id="L137">        verifyNoMoreInteractions(service);</span>
+<span class="fc" id="L138">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>project-manager-be (Dec 10, 2019 1:11:44 AM)</div></body></html>
